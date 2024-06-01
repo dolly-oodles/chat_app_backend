@@ -14,21 +14,20 @@ const io = new Server(server, {
   },
 });
 
-export const getRecieverSocketId = (recieverId) => {
-  return userSocketmap[recieverId];
+export const getReceiverSocketId = (reciverId) => {
+  return userSocketmap[reciverId];
 };
-
 const userSocketmap = {};
-
 io.on("connection", (socket) => {
   const userId = socket.handshake.query.userId;
-});
-if (userId !== "undefined") userSocketmap[userId] = socket.id;
-io.emit("getOnlineUsers", Object.keys(userSocketmap));
 
-socket.on("disconnect", () => {
-  delete userSocketmap[userId],
-    io.emit("getOnlineUsers", Object.keys(userSocketmap));
+  if (userId !== "undefined") userSocketmap[userId] = socket.id;
+  io.emit("getOnlineUsers", Object.keys(userSocketmap));
+
+  socket.on("disconnect", () => {
+    delete userSocketmap[userId],
+      io.emit("getOnlineUsers", Object.keys(userSocketmap));
+  });
 });
 
 export { server, app, io };
