@@ -25,6 +25,13 @@ export const sendMessage = async (req, res) => {
       chats.messages.push(newMessages._id);
     }
     await Promise.all([chats.save(), newMessages.save()]);
+
+    //SOCKET.IO function
+    const reciverSocketId = getReceiverSocketId(reciverId);
+    if (reciverSocketId) {
+      io.to(reciverSocketId).emit("newMessage", newMessages);
+    }
+
     res.status(201).send(newMessages);
   } catch (error) {
     res.status(500).send({
