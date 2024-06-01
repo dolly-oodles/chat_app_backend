@@ -9,6 +9,8 @@ const io = new Server(server, {
   cors: {
     origin: "*",
     metthods: ["GET", "POST"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+    credentials: true,
   },
 });
 
