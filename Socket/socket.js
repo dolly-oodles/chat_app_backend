@@ -30,3 +30,5 @@ socket.on("disconnect", () => {
   delete userSocketmap[userId],
     io.emit("getOnlineUsers", Object.keys(userSocketmap));
 });
+
+export { server, app, io };
