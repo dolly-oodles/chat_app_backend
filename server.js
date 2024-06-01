@@ -6,8 +6,9 @@ import messageRouter from "./Routes/messageRoute.js";
 import userRouter from "./Routes/userRoute.js";
 import cookieParser from "cookie-parser";
 import cors from "cors";
+import { app, server } from "./Socket/socket.js";
 
-const app = express();
+// const app = express();
 app.use(express.json());
 app.use(cookieParser());
 dotenv.config();
@@ -28,7 +29,7 @@ app.use("/api/user", userRouter);
 app.get("/chatapp", (req, res) => {
   res.send("Server is working");
 });
-app.listen(PORT, () => {
+server.listen(PORT, () => {
   dbConnect();
   console.log(`listening on ${PORT}`);
 });
