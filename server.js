@@ -27,7 +27,7 @@ app.use(
 app.use("/api/auth", authRouter);
 app.use("/api/message", messageRouter);
 app.use("/api/user", userRouter);
-app.get("/chatapp", (req, res) => {
+app.get("/", (req, res) => {
   res.send("Server is working");
 });
 server.listen(PORT, () => {
