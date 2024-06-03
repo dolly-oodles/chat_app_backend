@@ -65,16 +65,15 @@ export const userLogin = async (req, res) => {
         .status(500)
         .send({ success: false, message: "Email or Password doesn't match" });
 
-    const getToken = jwtToken(user._id, res);
-    console.log(getToken);
+    const token = jwtToken(user._id, res);
     res.status(200).send({
       _id: user._id,
       fullname: user.fullname,
       username: user.username,
       profilePic: user.profilePic,
       email: user.email,
+      token: token,
       message: "Successfully Login",
-      token: getToken,
     });
   } catch (error) {
     res.status(500).send({
