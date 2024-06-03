@@ -41,6 +41,7 @@ export const userRegister = async (req, res) => {
       username: newUser.username,
       profilePic: newUser.profilePic,
       email: newUser.email,
+      message: "Registered Successfully",
     });
   } catch (error) {
     res.status(500).send({
@@ -73,7 +74,7 @@ export const userLogin = async (req, res) => {
       profilePic: user.profilePic,
       email: user.email,
       token: token,
-      message: "Successfully Login",
+      message: "Successfully Logedd In",
     });
   } catch (error) {
     res.status(500).send({
