@@ -1,23 +1,24 @@
 import Conversation from "../Models/conversationModels.js";
 import Message from "../Models/messageModels.js";
+import { getReceiverSocketId, io } from "../Socket/socket.js";
 
 export const sendMessage = async (req, res) => {
   try {
     const { message } = req.body;
-    const { id: recieverId } = req.params;
+    const { id: receiverId } = req.params;
     const senderId = req.user._conditions._id;
 
     let chats = await Conversation.findOne({
-      participants: { $all: [senderId, recieverId] },
+      participants: { $all: [senderId, receiverId] },
     });
     if (!chats) {
       chats = await Conversation.create({
-        participants: [senderId, recieverId],
+        participants: [senderId, receiverId],
       });
     }
     const newMessages = new Message({
       senderId,
-      recieverId,
+      receiverId,
       message,
       conversationId: chats._id,
     });
@@ -27,9 +28,9 @@ export const sendMessage = async (req, res) => {
     await Promise.all([chats.save(), newMessages.save()]);
 
     //SOCKET.IO function
-    const reciverSocketId = getReceiverSocketId(reciverId);
-    if (reciverSocketId) {
-      io.to(reciverSocketId).emit("newMessage", newMessages);
+    const receiverSocketId = getReceiverSocketId(receiverId);
+    if (receiverSocketId) {
+      io.to(receiverSocketId).emit("newMessage", newMessages);
     }
 
     res.status(201).send(newMessages);
@@ -44,10 +45,10 @@ export const sendMessage = async (req, res) => {
 
 export const getMessages = async (req, res) => {
   try {
-    const { id: recieverId } = req.params;
+    const { id: receiverId } = req.params;
     const senderId = req.user._conditions._id;
     const chats = await Conversation.findOne({
-      participants: { $all: [senderId, recieverId] },
+      participants: { $all: [senderId, receiverId] },
     }).populate("messages");
 
     if (!chats) return res.status(200).send([]);
