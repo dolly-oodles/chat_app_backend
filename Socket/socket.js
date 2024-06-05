@@ -7,10 +7,9 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: "https://conn-action-dashboard.netlify.app",
-    metthods: ["GET", "POST"],
+    origin: "*",
+    metthods: "*",
     allowedHeaders: ["Content-Type", "Authorization"],
-    credentials: true,
   },
 });
 
