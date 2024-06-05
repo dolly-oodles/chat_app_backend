@@ -7,7 +7,7 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: "https://chat-app-backend-hhmx.onrender.com",
+    origin: "https://conn-action-dashboard.netlify.app",
     methods: "*",
     allowedHeaders: ["Content-Type", "Authorization"],
   },
