@@ -7,12 +7,12 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: "*",
-    metthods: "*",
+    origin: "https://chat-app-backend-hhmx.onrender.com",
+    methods: "*",
     allowedHeaders: ["Content-Type", "Authorization"],
   },
 });
-
+// https://chat-app-backend-hhmx.onrender.com/
 export const getReceiverSocketId = (receiverId) => {
   return userSocketmap[receiverId];
 };
